@@ -1,0 +1,282 @@
+/* на маленьких разшерениях*/
+/* #717171 */
+/* #252525 */
+
+
+html, body {
+  font-family: 'Open Sans', Arial, sans-serif;
+  background-color: #ffffff;
+  color: rgb(52, 53, 56);
+  line-height: 1.5;
+  min-width: 164px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.list-restored {
+  list-style: disc inside none;
+}
+
+.ordered-list-restored {
+  list-style: decimal inside none;
+}
+
+.ordered-list-restored li:not(:first-child) {
+  padding-top: 1rem;
+}
+
+pre {
+  white-space: pre-wrap;
+  background-color: rgb(219, 219, 219);
+  color: #000000;
+} 
+ 
+.navbar {
+  position: fixed;
+  width: 14rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-right: 0.175rem solid rgba(0,22,22,0.4);
+}
+
+.navbar__nav-header {
+  padding: 1rem;
+  border-bottom: 0.05em solid #777979;
+  position: relative;
+}
+
+.navbar h1 {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.navbar-header__written-by {
+  text-align: center;
+}
+
+.navbar-header__written-by a{
+  text-decoration: none;
+  color: inherit;
+}
+
+.navbar-header__written-by a:hover {
+  color: rgb(209, 152, 28);
+}
+
+.navbar-header__written-by a:active {
+  color: rgba(209, 152, 28, 0.7);
+}
+
+.navbar-header__written-by sup {
+  font-size: 0.65rem;
+}
+
+.navbar__list {
+  overflow-y: auto;
+}
+
+.navbar li a {
+  font-size: 1.1rem;
+  color: inherit;
+  text-decoration: inherit;
+  cursor: pointer;
+  border-bottom: 0.05em solid #777979;
+  display: block;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+
+}
+/* for script.js ----- */
+.menu-item--selected {
+  background-color: #e4e2e2;
+}
+.menu-item--hovered {
+  background-color: #cacaca;
+}
+/* ----- */
+
+.shown-when-mobile {
+  display: none;
+}
+
+main {
+  margin-left: 14rem;
+  padding: 1rem 2.5rem 2.5rem 1rem;
+}
+
+main h2 {
+  top: 0;
+  right: 0;
+}
+
+main h3 {
+  font-size: 1.25rem;
+  padding-bottom: 1rem;
+  position: relative;
+}
+
+main h4 {
+  font-weight: 500;
+  font-size: 1rem;
+  padding-left: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+main .content-section:first-of-type h3 {
+  padding-top: 0;
+}
+
+main p {
+  padding-right: 1rem;
+  padding-bottom: 0.4rem;
+}
+
+main p.important {
+  font-style: italic;
+  text-decoration: underline;
+  padding-top: 0.25rem;
+}
+
+main pre {
+  padding-bottom: 0.4rem;
+}
+
+main img {
+  max-width: 100%;
+}
+
+
+.question {
+  color: rgb(209, 152, 28);
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.question:hover {
+  cursor: pointer;
+}
+main label ~ p,
+main label ~ pre {
+  display: none;
+  outline: 2px solid rgb(209, 152, 28);
+}
+main input[type="checkbox"]:checked ~ p,
+main input[type="checkbox"]:checked ~ pre {
+  display: block;
+  outline: 2px solid rgb(209, 152, 28);
+  padding: 0.5rem;
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 0.7rem;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: white;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #dfdede; 
+  border-radius: 5%;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(102, 105, 110); 
+}
+
+.button-scroll {
+  position: fixed;
+  z-index: 200;
+  bottom: 4.5vh;
+  right: 4.5vh;
+  width: 2.5rem; 
+  height: 2.5rem;
+  border-radius: 50%;
+  display: none;
+  border: none;
+  color: #ffffff;
+}
+
+a[href="#to-top"]::before {
+  content: "";
+  position: absolute;
+  top: 45%;
+  transform: translate(20px,-50%);
+  width: 0.175rem;
+  height: 1.8rem;
+  border: 0.175rem solid rgb(104, 112, 112);
+}
+
+a[href="#to-top"]::after {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  transform: translate(0.95rem) rotate(45deg);
+  border: 0.35rem solid rgb(104, 112, 112);
+  border-bottom: none;
+  border-right: none;
+} 
+
+
+@media (orientation: portrait) and (max-width: 740px) {
+  .navbar {
+    position: relative;
+    width: 100%;
+    border-right: none;
+    flex-wrap: wrap;
+  }
+  .navbar .navbar-header {
+    padding-bottom: 0.2rem;
+  }
+  .navbar__list {
+    height: 14.8rem;
+  }
+  .navbar__list a:last-child li {
+    border-bottom: none;
+  }
+  .navbar__list a li {
+    margin: 0 1rem;
+  }
+  .shown-when-mobile {
+    display: block;
+    position: static;
+    font-size: 0.75rem;
+    width: 100%;
+    padding-top: 0.75rem;
+  }
+
+  main {
+    margin: 0;
+    border-top: 0.05em solid #777979; 
+  }
+  main h3 {
+    position: sticky; 
+    top: 0;
+    background: #ffffff;
+    text-align: center;
+  }
+} 
+
+@media print {
+  header,
+  .button-scroll  {
+    display: none;
+  }
+  main label ~ p,
+  main label ~ pre {
+    display: block;
+ }
+}
+
+/* html, body {
+  background-color: #252525;
+  color: #717171;
+}
+pre {
+  background-color: rgb(85, 85, 85);
+} */
+

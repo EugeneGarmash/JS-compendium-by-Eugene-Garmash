@@ -1,0 +1,58 @@
+/* * { outline: 2px dotted red; }
+* * { outline: 2px dotted green; }
+* * * { outline: 2px dotted orange; }
+* * * * { outline: 2px dotted blue; }
+* * * * * { outline: 1px solid red; }
+* * * * * * { outline: 1px solid green; }
+* * * * * * * { outline: 1px solid orange; }
+* * * * * * * * { outline: 1px solid blue; } */
+
+/* border-box */
+*, *::before, *::after {
+    box-sizing: inherit;
+  }
+  html {
+    box-sizing: border-box;
+  }
+  .content-box-component {
+    box-sizing: content-box;
+  }
+  
+  /* class="visually-hidden" */
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    clip: rect(0, 0, 0, 0);
+    overflow: hidden;
+    background-color: transparent;
+  }
+  
+  /* the code below is borrowed from Eric's reset.css and adopted by me*/
+  html, body, /*general*/
+  div, section, article, header, footer, main, nav, aside, /*layout*/
+  object, iframe, embed, audio, video, canvas, /*interactive*/
+  h1, h2, h3, h4, h5, h6, p,  /*headings and paragraphs*/
+  table, caption, tbody, tfoot, thead, tr, th, td, /*tables*/
+  fieldset, form, label, legend, /*forms*/
+  ol, ul, li, /*lists*/
+  /*buttons & input - better not to touch*/
+  /*other*/
+  a, abbr, address, b, blockquote, cite, code, dl, dt, dd, 
+  del, dfn, details, em, figure, figcaption, i, img, ins, kbd, mark, output, 
+  pre, q, ruby, s, samp, small, span, strong, sub, summary, sup, time, u, var
+   {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  ol, ul { /*to set again: list-style: disc inside none;*/
+    list-style: none;
+  }
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
