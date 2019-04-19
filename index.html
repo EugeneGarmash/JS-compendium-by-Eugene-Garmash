@@ -5,11 +5,11 @@
 	<meta charset="UTF-8">
 	<title>JavaScript compendium</title>
 	<meta name="description" content="JS compendium written by some jerky coder">
-  <meta name="keywords" content="JS, JavaScript, EcmaScript, JS5, JS6, JS7, JS8, programming, programming language">
-  <meta name="author" content="Eugene Garmash">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="normalize.css">
-  <link rel="stylesheet" href="customResetEugeneGarmash.css">
+	<meta name="keywords" content="JS, JavaScript, EcmaScript, JS5, JS6, JS7, JS8, programming, programming language">
+	<meta name="author" content="Eugene Garmash">
+ 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="normalize.css">
+	<link rel="stylesheet" href="customResetEugeneGarmash.css">
 	<link rel="stylesheet" href="style.css">
 </head>
 
@@ -64,6 +64,31 @@
         <li>
           <a href="#closures">
             Замыкания
+          </a>
+        </li>
+        <li>
+          <a href="#objects">
+            Объекты
+          </a>
+        </li>
+        <li>
+          <a href="#JS-n-browser">
+              JS, HTML и браузер
+          </a>
+        </li>
+        <li>
+          <a href="#events">
+            События
+          </a>
+        </li>
+        <li>
+          <a href="#JS-math">
+            JS Math
+          </a>
+        </li>
+        <li>
+          <a href="#JS-time">
+            JS time
           </a>
         </li>
       </ul>
@@ -234,7 +259,8 @@
         <h4>Оператор typeof</h4>
         <p>возвращает тип аргумента (то, что в скобках). Синтаксис оператора: <br> 
             - typeof x <br>
-            - typeof(x) <br>
+            - typeof(x)
+        </p>
       </section>
     </section>
 
@@ -755,7 +781,7 @@ if (itsRaining == true || temperature &lt; 0 || temperature > 35) {
     console.log(page);
   }
 </pre>
-        <p>Можно убрать начало (1). <br> Можно убрать и шаг(2). <br> А можно и вообще убрать всё, получив бесконечный цикл(3).
+        <p>Можно убрать начало (1). <br> Можно убрать и шаг(2). <br> А можно и вообще убрать всё, получив бесконечный цикл(3).</p>
 <pre>
   // 1
     var i = 0;
@@ -2169,8 +2195,969 @@ if (itsRaining == true || temperature &lt; 0 || temperature > 35) {
       </section>
     </section>
 
+    <section class="content-section" id="objects">
+      <h3>Объекты</h3>
+      <section>
+        <h4>Общее</h4>
+        <p>Объект — тип данных, который хранит в себе информацию в виде пар «ключ-значение». Если массив — нумерованный список, где каждый элемент имеет свой порядковый номер, то объект — список, в котором каждый элемент сопоставлен со своим ключом и порядок совсем неважен.</p>
+        <p>Создание объекта</p>
+<pre>
+  var cat = {};
+  // Так создаётся объект с именем cat
+</pre>
+        <p>Добавление свойств</p>
+        <p>Пары «ключ-значение», которые содержит в себе объект, называются свойствами или атрибутами.<br>
+        - Ключ обособляется от значения двоеточием.<br>
+        - Пары «ключ-значение» отделяются друг от друга запятыми.<br>
+        - Значениями могут быть данные любого типа (число, строка, массив и так далее).<br>
+        Выглядят они так:</p>
+<pre>
+  var cat = {
+    name: 'Кекс',
+    // Добавили новое свойство, где name — ключ, 'Кекс' — значение
+    age: 5
+    // Новое свойство. Ключ — age, значение — 5
+  };  
+  var user = {
+    name: "Таня",
+    age: 25,
+    size: {
+      top: 90,
+      middle: 60,
+      bottom: 90
+    }
+  }
+  alert(user.name) // "Таня"
+  alert(user.size.top) // 90          
+</pre>
+      </section>
+      <section>
+        <h4>Читаем из объекта</h4>
+        <p>Чтобы получить значение свойства, к нему надо обратиться через точку объект.ключ или через скобки объект[‘ключ’]. Если свойства нет,  вы получите undefined, то есть ничего. На практике это выглядит так:</p>
+<pre>
+  var cat = {
+    name: 'Кекс',
+    age: 5
+  };
+  console.log(cat.name); // Выведет в консоль 'Кекс'
+  console.log(cat.age); // Выведет в консоль 5
+  console.log(cat.color); // Выведет undefined, такого ключа в объекте нет            
+</pre>
+        <p>Скобочная нотация намного гибче точечной. Например, вы можете прочитать из объекта свойство, название которого записано в переменную. В качестве ключей в объекте можно использовать любые строки, даже строки с пробелами. С точечной нотацией такие свойства прочитать не получится, а со скобочной — без проблем.</p>
+<pre>
+  var name = 'Кекс';
+  var catsFavoriteFood = { Кекс: 'рыба' };
+  console.log(catsFavoriteFood.name);
+  // Выведет в консоль undefined
+  console.log(catsFavoriteFood[name]);
+  // Выведет в консоль 'рыба'
+  var cat = { 'favorite food': 'Сметана' };
+  console.log(cat.favorite food);
+  // Вызовет ошибку
+  console.log(cat['favorite food']);
+  // Отработает нормально    
+</pre>
+<p>
+  Доступ через точку используется, если мы на этапе написания программы уже знаем название свойства. А если оно будет определено по ходу выполнения, например, введено посетителем и записано в переменную, то единственный выбор – квадратные скобки.
+</p>
+      </section>
+      <section>
+        <h4>Добавление и удаление свойств</h4>
+<pre>
+  // obj['param125'] = '123'; или просто переменная
+  // obj.param125 = '123'; или просто переменная
 
+  delete person.age;
+</pre>
+      </section>
+      <section>
+        <h4>Есть ли свойство? и переопределение свойств</h4>
+        <p>- <b>оператор: "in"</b>. Его синтаксис: "prop" in obj, причем имя свойства – в виде строки, например:</p>
+<pre>
+  if ("name" in person) {
+    alert( "Свойство name существует!" );
+  }            
+</pre>
+        <p>Сравнивает значения с undefined. Дело в том, что в JavaScript можно обратиться к любому свойству объекта, даже если его нет. Ошибки не будет. Но если свойство не существует, то вернется специальное значение undefined. Внимание: не забывать, что значение свойства теоретически может быть и undefined.</p>
+<pre>
+  var person = {
+    name: "Василий"
+  };
+  alert( person.lalala === undefined ); // true, свойства нет
+  alert( person.name === undefined ); // false, свойство есть.
+  
+  if (obj.prop !== undefined).            
+</pre>
+        <p>- <b>elem.hasOwnProperty()</b></p>
+<pre>
+  const object1 = new Object();
+  object1.property1 = 42;
+  console.log(object1.hasOwnProperty('property1'));
+  // expected output: true            
+</pre>
+        <p>Переопределение свойств объекта. Свойства объектов можно не только читать, но и переопределять, как и обычные переменные.</p>
+<pre>
+  var cat = {
+    name: 'Кекс',
+    age: 5
+  };
+  cat.age++; // Увеличили возраст кота на 1
+  console.log(cat.age) // Выведет в консоль 6
+  cat.name = 'Рокки'; // Заменили снаружи значение свойства name
+  console.log(cat.name); // Выведет в консоль 'Рокки'
+</pre>
+      </section>
+      <section>
+        <h4>Передаём объект по ссылке – при копировании – ссылка на объект, копия объекта не создаётся</h4>
+<pre>
+  var firstCat = {
+    name: 'Кекс',
+    age: 5
+  };
+  
+  var secondCat = firstCat;
+  console.log(secondCat);
+  // Выведет {"name":"Кекс","age":5}
+  
+  firstCat.name = 'Снежок';
+  console.log(secondCat);
+  // Выведет {"name":"Снежок","age":5}            
+</pre>
+        <p>Мы же не трогали второй объект secondCat, но он изменился вместе с первым объектом firstCat. Почему так? В JS объект всегда один, в памяти не создаётся новое место под копию объекта. Каждая переменная содержит не новую отдельную сущность, а ссылку на один-единственный объект. Поэтому когда мы меняем что-то в объекте через одну из переменных, в которой содержится ссылка на него, изменения видны во всех других переменных, будь их хоть двадцать или сорок. Это важная особенность объектов, которую надо запомнить. Она так и называется — передача объектов по ссылке.</p>
+      </section>
+      <section>
+        <h4>Клонирование объектов</h4>
+        <p>Иногда, на практике – очень редко, нужно скопировать объект целиком, создать именно полную независимую копию, «клон» объекта.  Для этого нужно пройти по объекту, достать данные и скопировать на уровне примитивов:</p>
+<pre>
+  var user = {
+    name: "Вася",
+    age: 30
+  };
+  var clone = {}; // новый пустой объект
+  // скопируем в него все свойства user
+  for (var key in user) {
+    clone[key] = user[key];
+  }
+  // теперь clone - полностью независимая копия
+  clone.name = "Петя"; // поменяли данные в clone
+  alert( user.name ); // по-прежнему "Вася"            
+</pre>
+        <p>
+          В этом коде каждое свойство объекта user копируется в clone. Если предположить, что они примитивны, то каждое скопируется по значению и мы как раз получим полный клон. Если же свойства объектов, в свою очередь, могут хранить ссылки на другие объекты, то нужно обойти такие подобъекты и тоже склонировать их. Это называют «глубоким» клонированием.
+        </p>
+      </section>
+      <section>
+        <h4>Пример кода: игра в кости</h4>
+<pre>
+  // 1.
+  // пишем объекты с правилами и игроками
+  var gameRules = { 
+    diceNumber: 1,
+    maxAttempts: 1
+  };
+  var firstCat = {
+    name: 'Кекс',
+    points: 0
+  };
+  var secondCat = {
+    name: 'Рудольф',
+    points: 0
+  };
+  var thirdCat = {
+    name: 'Рокки',
+    points: 0
+  };
+  
+  // 2.
+  // формируем массив с игроками
+  var cats = [firstCat, secondCat, thirdCat]; 
+  
+  // 3.
+  // функция для подсчёта очков (аргументы: правила, игроки)
+  // цикл1 (для попыток): начинаем с первой попытки, число попыток прописано в правилах, цикл2 (для игроков): результат броска записываем в переменную, потом увеличиваем количество очков игрока на эту переменную
+  // возвращаем измененный массив с игроками (с перезаписанным количеством очков)
+  var runGame = function (rules, players) { 
+    for (var currentAttempt = 1; currentAttempt &lt; = rules.maxAttempts; currentAttempt ++) {
+      for (var i = 0; i &lt;  players.length; i++) {
+        var throwResult = keks.throwDice(rules.diceNumber, rules.diceNumber * 6);
+        players[i].points += throwResult;
+        console.log(players[i].name + ' выбросил ' + players[i].points);
+      }
+    }
+    return players;
+  };
+  
+  // 4.
+  // функция для определения подебителей
+  // создаём пустой массив winners для победителей 
+  // представляем, что первый игрок выкинул больше всех и записываем его объект в переменную max
+  // цикл (для записи победителей): для удобства записываем текущего игрока в переменную currentPlayer, если количество очков какого-либо игрока > max.points, то в max записываем значение currentPlayer, стирая предыдущее. Если очки currentPlayer === очкам max, то добавляем в массив winners нового победителя (currentPlayer). 
+  // возвращаем массив winners со значениями, которые внесли в этой функции
+  var getWinners = function (players) {
+    var winners = [];
+    var max = players[0];
+  
+    for (var i = 0; i &lt; players.length; i++) {
+      var currentPlayer = players[i];
+      if (currentPlayer.points > max.points) {
+        max = currentPlayer;
+        winners = [max];
+      } else if (currentPlayer.points === max.points) {
+        winners.push(currentPlayer);
+      }
+    }
+  
+    return winners;
+  };
+  
+  // 5.
+  // функция для вывода победителей
+  // проверка "если победили все" (если длинна массивов с игроками и победителями одинаковая): выводим строку с текстом в консоль и заканчиваем выполнение функции (return)
+  // для тех случаев, когда победили не все создаем "шапку сообщения" с текстом "победил" и записываем её в переменную
+  // если победителей больше одного, меняем "победил" на "победили"
+  // цикл (перебираем победителей): ко всем элементам после первого добавляем запятую. У последнего элемента запятой не будет, так как код с добавлением запятой стоит перед добавлением имени победителя в выводимое сообщение
+  var printWinners = function (players, winners) {
+    if (players.length === winners.length) {
+      console.log('Все коты как на подбор!');
+      return;
+    }
+  
+    var message = 'Победил ';
+    if (winners.length > 1) {
+      message = 'Победили '
+    }
+    for (var i = 0; i &lt; winners.length; i++) {
+      if (i >= 1) {
+        message += ', '  
+      }
+      message += winners[i].name;
+    }
+  
+    message += ' с количеством очков: ' + winners[0].points;
+  
+    console.log(message);
+  };
+  
+  // 6.
+  // посчитали очки, переписали cats: вызываем функцию для подсчёта очков (которая перезаписывает значение очков в каждом объекте), подставляем в неё значения объекта с правилами и массив с именами котов. Здесь же перезаписываем значение массива cats на значение, которое возвращаем из этой функции
+  // формируем массив победителей со значений cats: вызываем функцию для определения победителей, подставляем массив cats. Здесь же заносим массив с победителями в переменную tops
+  // выводим победителей: вызываем функцию для вывода победителей, подставляем массив cats и массив  
+  cats = runGame(gameRules, cats); // 
+  var tops = getWinners(cats); // 
+  printWinners(cats, tops); //
+</pre>
+      </section>
+      <section>
+        <h4>Функции в объектах – методы объектов</h4>
+        <p>В объектах могут храниться любые типы данных, в том числе и функции. Такие свойства-функции называются методами объектов. Они вызываются так же, как и любые другие функции, через круглые скобки, а обращаемся мы к методам, как и к свойствам объекта. В итоге вызов метода записывается так: объект.метод().</p>
+<pre>
+  var cat = {
+    name: 'Кекс',
+    color: 'рыжий',
+    age: 5,
+    getGreeting: function() {
+      return 'Мяу, привет!';
+    }
+  };
+  console.log(cat.getGreeting()); // Выведет 'Мяу, привет!'            
+</pre>
+      </section>
+      <section>
+        <h4>Словари (мапы)  - асоциативные массивы</h4>
+        <p>Раз методы это те же функции, почему мы вообще записываем их в объект, а не используем привычные внешние функции? Методы используются для работы с объектами. Они читают свойства, переписывают их и возвращают. Да, можно создать внешнюю функцию, передавать ей объект и обрабатывать внутри этой функции. Но намного удобней держать в объекте всё, что относится именно к этому объекту. Например, мы храним технические характеристики внутри объекта компьютера, нам нужно возвращать строку с данными и высчитывать цену. Эти две задачи связаны именно с объектом компьютера, поэтому мы будем записывать эти функции в объект.</p>
+        <p>В некоторых ситуациях блоки с условиями можно сократить с помощью объектов. Давайте разбираться, как это сделать. Рассмотрим на примере.</p>
+<pre>
+  var printFavoriteFood = function (name) {
+    var message = 'Моя любимая еда — ';
+    if (name === 'Кекс') {
+      message += 'рыба';
+    } else if (name === 'Рудольф') {
+      message += 'котлета';
+    } else if (name === 'Снежок') {
+      message += 'сметана';
+    }
+    return message;
+  };
+  console.log(printFavoriteFood('Снежок')); // Выведет 'Моя любимая еда — сметана 
+</pre>
+        <p>Обратите внимание, что каждому коту, а точнее его имени, соответствует определённая еда. При этом порядок котов совсем неважен. Можно ли записать вкусовые предпочтения котов в объект? Давайте попробуем.</p>
+<pre>
+  var catsFavoriteFood = {
+    Кекс: 'рыба',
+    Рудольф: 'котлета',
+    Снежок: 'сметана'
+  };            
+</pre>
+        <p>Можно ли теперь использовать данные в объекте catsFavoriteFood так, чтобы совсем избавиться от условий в теле функции printFavoriteFood? Можно! Перед нами обычный объект со свойствами и их значениями. Значит, мы можем обратиться к свойству объекта и подставить в выражение строку, которая в нём содержится.</p>
+<pre>
+  var catsFavoriteFood = {
+    Кекс: 'рыба',
+    Рудольф: 'котлета',
+    Снежок: 'сметана'
+  };
+  var printFavoriteFood = function (name) {
+    return 'Моя любимая еда — ' + catsFavoriteFood[name];
+  };
+  console.log(printFavoriteFood('Снежок')); // Выведет 'Моя любимая еда — сметана'          
+</pre>
+        <p>Код работает, как и прежде, зато насколько сократилась наша программа! Мы записали в объект не характеристику вида name: 'Кекс', а соотношение имени кота и лакомства, которое по вкусу именно ему. Такие объекты называют словарями, мапами или ассоциативными массивами. Они очень удобны в использовании и позволяют писать код чище и проще.</p>
+      </section>
+      <section>
+        <h4>this</h4>
+        <p>ключевое слово this указывает на конкретный объект, а именно на тот объект, на котором была вызвана функция (метод). Использовать this просто, достаточно заменить название объекта на ключевое слово в обращении к свойству. Вместо объект.свойство используем this.свойство. Оно указывает на текущий объект и называется контекстом вызова.</p>
+<pre>
+  var cat = {
+    name: 'Рудольф',
+    introduce: function () {
+      console.log('Мяу! Я кот ' + this.name + '!');
+    }
+  };
+  cat.introduce(); // Выведет 'Мяу! Я кот Рудольф!'            
+</pre>
+<p>Объект, на который указывает this называется контекстом вызова. Важная деталь: пока функция не вызвана, this не содержит никакого значения, контекст появляется только в момент вызова функции.  Ключевое слово this приносит много пользы разработчикам. О других преимуществах и особенностях this вы узнаете позже, в дальнейших курсах, а пока заменим обращение к свойствам внутри объекта computer.</p>
+      </section>
+      <section>
+        <h4>Пример кода: Интернет-магазин компьютеров</h4>
+<pre>
+  // 1.
+  // словарь с процессорами
+  // словарь с дисплеями
+  // словарь с памятью
+  var processorPrice = {
+    'i5': 5000,
+    'i7': 10000
+  };
+  var displayPrice = {
+    13: 5000,
+    15: 10000
+  };
+  var memoryPrice = {
+    8: 3000,
+    16: 4000
+  };
+  
+  // 2.
+  // функция для определения цены компьютера 
+      // объект с компьютером
+          // функция-описание: называем характеристики компьютера
+          // функция-калькулятор: считаем цену компьютера
+      // возвращаем объект
+  //
+  var buildComputer = function (memory, display, processor) {
+    var customComputer = {
+      basicPrice: 5000,
+      processor: processor,
+      display: display,
+      memory: memory,
+      getDescription: function () {
+        return 'компьютер с процессором ' + this.processor + ', диагональю ' + this.display + ', оперативной памятью ' + this.memory;
+      },
+      getPrice: function () {
+        return this.basicPrice + processorPrice[this.processor] + displayPrice[this.display] + memoryPrice[this.memory];
+      }
+    };
+    return customComputer;
+  };
+  
+  // 3.
+  // переменная1 = функция(уникальные характеристики компьютера)
+  // выводим в консоль: функция-описание от переменной1 (функция объекта, который находится в функции) и функция-калькулятор от переменной1
+  // переменаня2 = функция(уникальыне характеристики компьютера)
+  // выводим в консоль: функция-описание от переменной2 (функция объекта, который находится в функции) и функция-калькулятор от переменной2
+  //
+  var myComputer = buildComputer(8, 13, 'i7');
+  console.log('В корзине ' + myComputer.getDescription() + ' стоимостью ' + myComputer.getPrice());
+  var anotherComputer = buildComputer(16, 15, 'i5');
+  console.log('В корзине ' +  anotherComputer.getDescription() + ' стоимостью ' + anotherComputer.getPrice());            
+</pre>
+      </section>
+      <section>
+        <h4>Строительство дома</h4>
+<pre>
+  // словарь ассоциаций
+  var materialPrice = {  
+    'wood': 1000,
+    'stone': 1500,
+    'brick': 2000
+  };
+  // пишем функцию(параметры соответствуют значениям "ключей" у объекта)
+  calculateSample = function(rooms, floors, material, coefficient) {
+  
+  var house = {
+    rooms: rooms,
+    floors: floors,
+    material: material,
+    coefficient: coefficient,
+  // расчитываем площадь, используя this
+    calculateSquare: function() {
+      var area = this.rooms * this.floors * this.coefficient;
+      return area;  
+    },
+  // расчитываем стоимость, используя this
+    calculatePrice: function() {
+      var cost = this.calculateSquare() * materialPrice[this.material];
+      return cost;
+    }
+  };
+  // возвращаем изменённый объект house (новые значение будут только у вызова функции, где значения rooms, floors, material, coefficient будут заменяться новыми)
+    return house;
+  }
+  
+  var newHouse = calculateSample(6, 8, 'brick', 10);
+  console.log('Дом с площадью '+ newHouse.calculateSquare() + ' м2 (' + newHouse.rooms + ' комнат на этаже' + ', ' + newHouse.floors + ' этажей' + ', средняя площадь комнаты - ' + newHouse.coefficient + ' м2, сделан из материала ' + newHouse.material + ') ' + 'обойдётся тебе в ' + newHouse.calculatePrice() + ' тыс. долларов');            
+</pre>
+      </section>
+      <section>
+        <h4>Методы объектов</h4>
+<pre>
+  // Получение <b>первого ключа и его значения</b>:
+  var firstKeyName = Object.keys(someObject)[0]
+  var firstKeyValue = someObject[Object.keys(salaries)[0]];
 
+  // <b>for...in</b> -- проходит по ключам объекта
+    var someObj= {
+    name: 'Eugene', 
+    age: 23, 
+    IQ: 90, sex: 'male'
+  };
+  for (var key in someObj) {
+    console.log('Ключ: ' + key + ', значение: ' + someObj[key] );
+  }
+  console.log('_____');
+  // Как уже говорилось, если имя свойства хранится в переменной, то обратиться к нему можно только так, не через точку.
+
+  // Порядок перебора соответствует порядку объявления для нечисловых ключей, а числовые – сортируются (в современных браузерах). Если нужно, чтобы порядок перебора числовых ключей соответствовал их объявлению в объекте, то используют трюк: числовые ключи заменяют на похожие, но содержащие не только цифры. Например, добавляют в начало +, как описано в примере выше, а потом, в процессе обработки, преобразуют такие ключи в числа.
+  var codes = {
+    "+7": "Россия",
+    "+38": "Украина",
+    "+1": "США"
+  };
+  for (var code in codes) {
+    var value = codes[code];
+    code = +code; // ..если нам нужно именно число, преобразуем: "+7" -> 7
+    alert( code + ": " + value ); // 7, 38, 1 во всех браузерах
+  }
+
+  // считать <b>количество ключей в объекте</b>: - через counter в цикле
+  var someObj = {
+    name: 'Eugene',
+    age: 23,
+    sex: 'male'
+  }
+  var counter = 0;
+  for (var key in someObj) {
+    counter ++;
+  }
+  console.log(counter);
+  // или так:
+  var size = <b>Object.keys(myObj).length</b>;
+
+  // <b>Вернуть массив ключе</b>й объекта - Object.keys(someObject)
+  const icecreamColors = {
+    chocolate: 'brown',
+    vanilla: 'white',
+    strawberry: 'red',
+  }
+  const types = Object.keys(icecreamColors);
+  //вот как будет выглядеть массив types: ["chocolate", "vanilla", "strawberry"]
+
+  // Вернуть <b>массив значений объекта</b> - Object.values(someObject)
+  const icecreamColors = {
+      chocolate: 'brown',
+      vanilla: 'white',
+      strawberry: 'red',
+  }
+  const colors = Object.values(icecreamColors);
+  // массив colors будет иметь вид ["brown", "white", "red"]
+
+  // массив из объекта - Object.entries(someObject)
+  const weather = {
+    rain: 0,
+    temperature: 24,
+    humidity: 33,
+  }
+  const entries = Object.entries(weather);
+  // в массив entries попадут следующие данные
+  // [['rain', 0], ['temperature', 24], ['humidity', 33]]
+
+  // Клонировать объект
+  var user = {
+    name: "Вася",
+    age: 30
+  };
+  var clone = {}; // новый пустой объект
+  // скопируем в него все свойства user
+  for (var key in user) {
+    clone[key] = user[key];
+  }
+  // или так:
+  function copy() {
+    var dst = arguments[0];
+    for (var i = 1; i &lt; arguments.length; i++) {
+      var arg = arguments[i];
+      for (var key in arg) {
+        dst[key] = arg[key];
+      }
+    }
+    return dst;
+  }
+  
+</pre>
+      </section>
+    </section>
+
+    <section class="content-section" id="JS-n-browser">
+      <h3>JS, HTML и браузер</h3>
+      <section>
+        <h4>Общее</h4>
+        <p>Подключение скриптов</p>
+        <ul>
+          <li>Если указан атрибут src, то содержимое тега игнорируется. В одном теге SCRIPT нельзя одновременно подключить внешний скрипт и указать код. </li>
+          <li>Если браузер видит тег ''script''', то он по стандарту обязан сначала выполнить его, а потом показать оставшуюся часть страницы. Если скрипт – внешний, то пока браузер не выполнит его, он не покажет часть страницы под ним.</li>
+          <li>существуют случаи, когда не нужно ждать загрузки всей страницы для загрузки скрипта, для таких ситуаций используют атрибут async / defer</li>
+          <li>Async - при обнаружении ''script async src="..."'' браузер не останавливает обработку страницы, а работает дальше. Скрипт выполнится, когда будет загружен.</li>
+          <li>Defer (выполнение – после загрузки страницы) - Похоже, но относительный порядок скриптов с defer будет сохранён. Второе отличие – скрипт с defer сработает, когда весь HTML-документ будет обработан браузером.</li>
+        </ul>
+<pre>
+// Остановить скрипт: 
+  function pow(x, n) {
+    ...
+    debugger; // &lt; -- отладчик остановится тут
+    ...
+  }
+</pre>
+        <p>
+          DOM - Document object Model<br>
+          BOM - Browser Object Model<br>
+          HTTP - работа с сетью
+          ''canvas''
+        </p>
+      </section>
+      <section>
+        <h4>alert, prompt, confirm</h4>
+        <p>Влиять на внешний вид нельзя. Окно сообщения, которое выводится, является модальным окном. Слово «модальное» означает, что посетитель не может взаимодействовать со страницей, нажимать другие кнопки и т.п., пока не разберётся с окном.</p>
+<pre>
+  // alert(сообщение); выводит сообщение и приостанавливает выполнение скрипта, пока пользователь не нажмёт «ОК».
+  alert("Привет");
+
+  prompt result = prompt(title, default);
+  //Функция выводит модальное окно с заголовком title, полем для ввода текста, заполненным строкой по умолчанию default и кнопками OK/CANCEL.
+  var years = prompt('Сколько вам лет?', 100);
+  alert('Вам ' + years + ' лет!');
+  Рекоммендуется всегда указывать второй аргумент:
+  var test = prompt("Тест", ''); // &lt; -- так лучше
+
+  confirm result = confirm(question);
+  // confirm выводит окно с вопросом question с двумя кнопками: OK и CANCEL. Результатом будет true при нажатии OK и false – при CANCEL(Esc):
+  var isAdmin = confirm("Вы - администратор?");
+  alert( isAdmin );
+</pre>
+      </section>
+      <section>
+        <h4>Поиск DOM элемента</h4>
+        <p>JavaScript особым образом воспринимает разметку: элементы здесь не строки, которые мы пишем в HTML-файлах, а объекты. При этом каждый объект связан с другими такими же объектами и знает о своём родителе, соседних объектах-элементах, вложенных объектах. В итоге получается древовидная структура, которая называется DOM (Document Object Model или объектная модель документа). В каждом DOM-дереве есть корневой объект, из которого «растут» другие объекты. Он называется document. Этот глобальный объект доступен во всех программах, которые работают в браузере. Проще говоря, document — страница, которая содержит все элементы разметки (объекты). С помощью document разработчики могут найти любой объект на странице, а потом изменить его. Для этого у объекта document есть специальные методы поиска.</p>
+<pre>
+  // <b>querySelector</b> - принимает любые селекторы и всевдоклассы
+  var list = document.querySelector('ul'); // Поиск элемента по тегу
+  var lastProduct = document.querySelector('li:last-child'); // Поиск последнего элемента из списка
+  var price = document.querySelector('.price'); // Поиск элемента по классу
+  var thirdProduct = document.querySelector('.product:nth-child(3)'); // Поиск третьего элемента из списка товаров
+
+  // <b>querySelecorAll</b> - возвращает не первый найденный элемент, а список (коллекцию / пседомассив) всех элементов, подходящих по селектору.
+  var updateCards = function(products) {
+    var elements = document.querySelectorAll('.product');
+    console.log(elements);
+  }
+  // еще пример
+  Следующий запрос получает все элементы LI, которые являются последними потомками в UL:
+  ul
+    li -- Этот -- li
+    li -- тест -- li
+  ul
+  ul
+    li -- полностью -- li
+    li -- пройден -- li
+  ul
+  // JS
+    var elements = document.querySelectorAll('ul > li:last-child');
+    for (var i = 0; i &lt; elements.length; i++) {
+      alert( elements[i].innerHTML ); // "тест", "пройден"
+    }
+
+  // <b>getElementsByTagName</b> - Метод elem.getElementsByTagName(tag) ищет все элементы с заданным тегом tag внутри элемента elem и возвращает их в виде списка.
+  var elements = document.getElementsByTagName('div');
+  // document.getElementsByName -- по атрибуту name
+
+  // <b>document.getElementById</b> - только для document.
+  var elem = document.getElementById('content');
+
+  // <b>getElementsByClassName</b> - Вызов elem.getElementsByClassName(className) возвращает коллекцию элементов с классом className. Находит элемент и в том случае, если у него несколько классов, а искомый – один из них.
+  var articles = document.getElementsByClassName('article');
+  alert( articles.length ); 
+
+  // <b>elem.closest(css)</b>
+  // Метод elem.closest(css) ищет ближайший элемент выше по иерархии DOM, подходящий под CSS-селектор css. Сам элемент тоже включается в поиск. Иначе говоря, метод closest бежит от текущего элемента вверх по цепочке родителей и проверяет, подходит ли элемент под указанный CSS-селектор. Если подходит – останавливается и возвращает его. 
+</pre>
+      </section>
+      <section>
+        <h4>Возврат дочерних элементов</h4>
+<pre>
+  // <b>DOM-элемент.children</b> → возвращает коллекцию дочерних, то есть вложенных, DOM-элементов. 
+  var cardList = document.querySelector('.products');
+  console.log(cardList.children);
+  var elem = document.body.children[0];
+  // передав <b>звездочку '*' вместо тега</b>:
+  elem.getElementsByTagName('*');
+</pre>
+      </section>
+      <section>
+        <h4>Работа с классами и тегами</h4>
+        <p>Среди свойств DOM-элементов — объект classList. Он содержит методы для управления классами DOM-элемента. Обратите внимание, что точку перед названием класса ставить не нужно:</p>
+<pre>
+  // <b>Добавляем класс</b>
+  product.classList.add('product--sale');
+  // <b>Удаляем класс</b>
+  popup.classList.remove('popup--open');
+  // <b>Переключаем класс</b>
+  popup.classList.toggle('popup--open');
+  // <b>Есть ли класс?</b>
+  elem.classList.contains("class") // возвращает true/false, есть ли у elem класс - без точки
+
+  elem.tagName
+
+  elem.className.includes() // проверяет наличие класса, true/false - без точки
+  elem.className.matches // проверяет по селектору
+
+  element.matches(selectorString); // true если соответствует
+  for (var i = 0; i &lt; elems.length; i++) {
+    if (elems[i].matches('a[href$="zip"]')) {
+      alert( "Ссылка на архив: " + elems[i].href );
+    }
+</pre>
+      </section>
+      <section>
+        <h4>Создание элемента + Добавление в DOM-дерево</h4>
+        <ol>
+          <li>
+            <p>Создавать элементы можно разными способами, мы будем использовать метод <b>createElement()</b> объекта document:</p>
+<pre>
+  var card = document.createElement('li');
+</pre>
+            <p>Обратите внимание, что createElement — метод именно объекта document. То есть с его помощью мы создаём какой-то элемент для этого документа, пока не указывая, где он будет находиться в DOM.</p>
+          </li>
+          <li>
+            <p>Вновь созданный элемент по умолчанию не находится в DOM-дереве и не отображается на странице. Мы просто храним его в переменной. Чтобы он появился на странице, его нужно добавить в DOM. Для этого элемент нужно поместить в его родителя. </p>
+<pre>
+  <b>list.appendChild(card);</b> - Добавляет elem в конец дочерних элементов parentElem.
+  <b>parentElem.insertBefore(elem, nextSibling)</b> // Вставляет elem в коллекцию детей parentElem, перед элементом nextSibling.
+  <b>list.insertBefore(newLi, list.firstChild);</b> // вставить элемент первым, или вот так: <b>list.insertBefore(newLi, list.childNodes[0]);</b> // если вторым аргументом указать null, то как appendChild
+  <b>someElem.parentNode.insertBefore(otherElem, someElem.nextSibling);</b> // вставить элемент после другого элемента, либо же последним
+</pre>
+            <p>Можно создать элемент с помощью createElement и сразу вставить его в родительский элемент, а уже затем добавлять классы. Но это не лучший путь — каждое изменение в DOM вызывает перерисовку страницы, а это дорогая операция, она занимает много времени.</p>
+          </li>
+          <li>
+<pre>
+  // Функция для создания элемента
+  var makeElement = function (tagName, className, text, parent) {
+    if (tagName) { var element = document.createElement(tagName) };
+    if (className) { element.classList.add(className) };
+    if (text) { element.textContent = text; }
+    if (parent) { parent.appendChild(element); }
+    return element;
+  };                
+</pre>
+          </li>
+        </ol>
+      </section>
+      <section>
+        <h4>Добавление текстового содержимого</h4>
+        <p>У каждого DOM-элемента есть свойство textContent. Оно содержит текстовое содержимое элемента. В textContent не попадает разметка, только текст.</p>
+<pre>
+    console.log(p.textContent);
+    // Выведет 'Я — текстовый элемент.'
+    // Это свойство объекта, которое можно не только прочитать, но и записать или перезаписать:
+    p.textContent = 'Теперь у меня новое содержимое.';
+    console.log(p.textContent);
+    // Выведет 'Теперь у меня новое содержимое.'
+    // В HTML содержание тега изменится               
+</pre>
+        <p>Добавлять содержимое в HTML-элемент через JavaScript можно и с помощью свойства innerHTML. Присвоенная свойству innerHTML строка заменяет всё содержимое HTML-элемента. В этой строке можно использовать любой HTML-код.</p>
+<pre>
+  var control = document.querySelector('.control');
+  control.innerHTML = 'walden';
+</pre>
+        <p> 
+          1. innerHTML parses content as HTML and takes longer.<br>
+          2. nodeValue is a little more confusing to use, but faster than innerHTML.<br>
+          3. innerText Takes styles into consideration. It won't get hidden text for instance.<br>
+          4. textContent uses straight text, does not parse HTML, and is faster.<br>
+          5. “”someElement””.firstChild.data - только текст элемента
+        </p>
+      </section>
+      <section>
+        <h4>Создание/удаление/перестановка элементов</h4>
+        <ol>
+          <li>
+            <p>Клонирование/копирование DOM-узлов</p>
+<pre>
+  elem.cloneNode(true) // создаёт «глубокую» копию элемента – вместе с атрибутами включая c подэлементами. Если с аргументом false – копия без дочерних элементов.
+</pre>
+          </li>
+          <li>
+            <p>Удаление узлов/элементов</p>
+<pre>
+  <b>parentElem.removeChild(elem)</b> // Удаляет elem из списка детей parentElem.
+  <b>elem.remove()</b> // var el = document.getElementById('div-02'); el.remove()
+  <b>parentElem.replaceChild(newElem, elem)</b> // удаляет elem и вставляет на его место newElem.
+  elem.innerHTML = ''; // очистка DOM-элемента                
+</pre>
+          </li>
+          <li>
+            <p>Перестановка элементов</p>
+<pre>
+  // нет необходимости в предварительном removeChild(last). Кроме того, все методы вставки автоматически удаляют вставляемый элемент со старого места.
+  var first = document.body.children[0];
+  var last = document.body.children[1];
+  document.body.insertBefore(last, first); // поменять местами                
+</pre>
+          </li>
+        </ol>
+      </section>
+      <section>
+        <h4>Атрибуты и JS, dataset</h4>
+        <p>
+          <br>
+          - Всегда являются строками.<br>
+          - Их имя нечувствительно к регистру (ведь это HTML)<br>
+          - Видны в innerHTML (за исключением старых IE)
+        </p>
+<pre>
+  <b>elem.hasAttribute(name)</b> // проверяет наличие атрибута
+  <b>elem.getAttribute(name)</b> // получает значение атрибута
+  <b>elem.setAttribute(name, value)</b> // устанавливает атрибут
+  <b>elem.removeAttribute(name)</b> // удаляет атрибут
+  <b>Some.attributes</b> // получить атрибуты элемента  
+    
+  var some = document.querySelector('.page-header__small');
+  var attrs = some.attributes;
+  for (var i = 0; i &lt; attrs.length; i++) {
+    console.log(attrs[i].name + " = " + attrs[i].value);
+  }
+</pre>
+        <p>
+            - Есть и другие атрибуты, которые не копируются в точности. «Логические» свойства вроде checked, selected всегда имеют значение true/false, а HTML-атрибут checked – любое строковое, важно лишь его наличие.<br>
+            - Свойство зависит от атрибута, но не наоборот. При изменении свойства input.value атрибут input.getAttribute('value') не меняется.<br>
+            - Атрибуту "class" соответствует свойство className. Атрибуту for → htmlFor.
+        </p>
+        <p>
+          Элементу можно задавать любой атрибут, валидатор не будет против. Для нестандартных (не описано в стандарте) атрибутов DOM-свойство не создаётся. Манипулировать атрибутом из JavaScript проще чем классом, так как значение атрибута – произвольная строка, значение класса – это «есть» или «нет».
+        </p>
+<pre>
+  // Например, если нужно отменить заказ, неважно в каком он состоянии сейчас – это сделает код
+  div.setAttribute('order-state', 'canceled');
+  // Для классов – нужно знать, какой класс у заказа сейчас. И тогда мы можем снять старый класс, и поставить новый:
+  div.classList.remove('order-state-new');
+  div.classList.add('order-state-canceled');
+</pre>
+        <p>Как правило нестандартные атрибуты записывают через 'data-[...]'. К таким атрибутам можно обратиться как к свойствам, при помощи свойства dataset:</p>
+<pre>
+  elem.dataset.about // elem.dataset.userLocation
+</pre>
+        <p>Важно понимать, что дефис в СSS превращается в большую букву в JS.</p>
+<pre>
+  //Показать / скрыть элемент:
+  element.hidden = !element.hidden; // или через if
+</pre>
+      </section>
+    </section>
+
+    <section class="content-section" id="events">
+      <h3>Events</h3>
+      <section>
+        <h4>Общее</h4>
+        <p>№1. HTML-атрибут onclick="alert('Клик!')"</p>
+        <p>№2. JS-1. Обьявить анонимную функцию либо назначить уже существующую:</p>
+<pre>
+  button.onclick = function() {
+    alert( 'Клик!' );
+  };
+  // либо так. Если добавить скобки, то sayThanks() – будет уже результат выполнения функции (а так как в ней нет return, то в onclick попадёт undefined)
+  function sayThanks() {
+    alert( 'Спасибо!' );
+  }
+  elem.onclick = sayThanks;
+</pre>
+        <p>Вешать через назначение атрибута - работать не будет.</p>
+        <p> №3. JS-2: addEventListener и removeEventListener</p>
+        <p>Для удаления нужно передать именно ту функцию-обработчик которая была назначена (а может быть передана ругая, с одинаковым кодом). не сохранить где-либо, а просто передать в addEventListener, как в предыдущем коде, то потом получить её обратно, чтобы снять обработчик, будет невозможно. Нет метода, который позволяет считать обработчики событий, назначенные через addEventListener.</p>
+      </section>
+      <section>
+        <h4>Всплытие</h4>
+        <p>При наступлении события обработчики сначала срабатывают на самом вложенном элементе, затем на его родителе, затем выше и так далее, вверх по цепочке вложенности. События «всплывают» от внутреннего элемента вверх через родителей, подобно тому, как всплывает пузырек воздуха в воде. Событие focus не всплывает.</p>
+        <p>Cобытие сначала двигается вниз от корня документа к event.target, по пути вызывая обработчики, поставленные через on* и addEventListener(...., false).Например, если стоит только один обработчик form.onclick, то он «поймает» все клики внутри формы. Где бы ни был клик внутри – он всплывёт до элемента <form>, на котором сработает обработчик.</p>
+<pre>
+  form onclick="alert('form')
+    div onclick="alert('div')
+      p onclick="alert('p')
+</pre>
+        <p>Чтобы поймать событие на стадии перехвата, нужно использовать третий  (event.eventPhase) аргумент addEventListener: если true, событие будет перехвачено по дороге вниз, если false - наоборот, сейчас это используется редко.</p>
+      </section>
+      <section>
+        <h4>Делегирование событий</h4>
+        <p>Если есть много элементов, события на которых нужно обрабатывать похожим образом, вместо того, чтобы назначать обработчик каждому – ставим один обработчик на их общего предка. Из него можно получить целевой элемент event.target, понять на каком потомке произошло событие и обработать его.</p>
+        <p>Обработчик table.onclick с циклом while для изменения ячеек таблицы, с учётом того, что event.target может быть не ячейка, а тег внутри её:</p>
+<pre>
+  table.onclick = function(event) {
+    var target = event.target;
+    // цикл двигается вверх от target к родителям до table
+    while (target != this) {    // или так: var td = target.closest('td');
+  
+      if (target.tagName == 'TD') {
+        // нашли элемент, который нас интересует!
+        highlight(target);
+        return;
+      }
+      target = target.parentNode;
+    }
+    // возможна ситуация, когда клик был вне <td>
+    // если цикл дошёл до table и ничего не нашёл,
+    // то обработчик просто заканчивает работу
+  }
+</pre>
+        <p>Делегирования для разных событий</p>
+<pre>
+  function menuAddEvent(someMenu) {
+    someMenu.addEventListener('click', function(evt) {
+      var attr = evt.target.getAttribute('data-action');
+      if (attr) {
+        if (attr === 'save') {
+          console.log('Сохраняю!');
+        } else if (attr === 'load') {
+          console.log('Загружаю...');
+        } else if (attr === 'search') {
+          console.log('Ищу, хозяин!');
+        }
+      }   
+    });
+  }
+  menuAddEvent(menu);            
+</pre>
+        <p>
+          Вешаем обработчик на контейнер.<br>
+          В обработчике: получаем event.target.<br>
+          В обработчике: если event.target или один из его родителей в контейнере (this) – интересующий нас элемент – обработать его.    
+        </p>
+        <p class="important">Приём проектирования "поведение"<pr>
+        <p>На родителя вешает один обработчик, для детей - определять работу того или иного элемента по data-* (или другому атрибуту) с помощью event.target</p>
+      </section>
+      <section>
+        <h4>evt.target vs this</h4>
+        <p>event.target – это исходный элемент, на котором произошло событие, в процессе всплытия он неизменен.<br>this – это текущий элемент, до которого дошло всплытие, на нём сейчас выполняется обработчик.</p>
+<pre>
+  /*
+  div 1
+    p some paragraph
+  div
+  */
+
+  document.querySelector('div').addEventListener('click', function(evt) {  // берет имеено evt.target,
+    содержит ссылку на конкретный элемент внутри формы, самый вложенный, на котором произошёл клик (до которого «доплыло» событие)
+    evt.target.style.backgroundColor = 'gray';
+    console.log(evt.target.tagName);
+  });
+  
+  // document.querySelector('div').addEventListener('click', function(evt) { // берет сам элемент
+  //   this.style.backgroundColor = 'gray';
+  //   console.log(this.tagName);
+  // });
+</pre>
+<pre>
+  // <b>свойства объекта event
+    event.target 
+    event.type
+    event.currentTarget 
+    event.clientX / event.clientY - Координаты курсора в момент клика (относительно окна)
+    evt.preventDefault()
+    event.stopPropagation()
+    event.stopImmediatePropagation() // остановить другие обработчики на элементе</b>
+</pre>
+      </section>
+      <section>
+        <h4>Пример кода</h4>
+<pre>
+  var popup = document.querySelector('.modal');
+  var openPopupButton = document.querySelector('.button-open');
+  var closePopupButton = popup.querySelector('.button-close');
+  
+  openPopupButton.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    popup.classList.add('modal--show');
+  });
+  
+  closePopupButton.addEventListener('click', function() {
+    popup.classList.remove('modal--show');  
+  });            
+</pre>
+      </section>
+      <section>
+        <h4>Как повесить обработчик на нажатие клавиши?</h4>
+        <p>У события «нажатие на клавишу» есть специальное название — keydown. Такое событие срабатывает при нажатии на любую клавишу. Обратите внимание, слушать это событие можно только на элементах, которые имеют состояние фокуса: поля ввода, кнопки, элементы с атрибутом tabindex, документ. При нажатии фокус должен находиться на соответствующем элементе.</p>
+<pre>
+  document.addEventListener('keydown', function(evt) {
+    // 
+  });            
+</pre>
+        <p>У объекта события есть много полезных свойств. Например, тип события, введённый символ, координаты курсора в момент наступления события и многое другое. В том числе и код клавиши, которую нажал пользователь. Это свойство называется keyCode. С помощью этого свойства каждую клавишу можно определить по коду. Например, у Enter код 13, а у ESC — код 27. Эти номера универсальны и одинаковы в любой раскладке. Найти код любой клавиши можно здесь.</p>
+      </section>
+    </section>
+
+    <section class="content-section" id="JS-math">
+      <h3>JS math</h3>
+      <section>
+        <h4>Math.floor() /// Math.ceil() /// Math.round() /// num.toFixed(precision)</h4>
+        <p>Для округления до n цифры после запятой: умножить и поделить на 10 с нужным количеством нулей. var n = 3.456; alert( Math.round(n * 100) / 100 ); // 3.46 --------- num.toFixed(precision) - округляет число num до точности precision и возвращает результат в виде строки. Округляет аналогично Math.round и дополняется нулями до нужной точности. Если нам нужно число, то делаем +n.toFixed(..) К методу числа можно обратиться и напрямую. Но если число целое, то будет проблема: alert(12.toFixed(1)); // ошибка! Ошибка произойдёт потому, что JavaScript ожидает десятичную дробь после точки. Это – особенность синтаксиса JavaScript. Вот так – будет работать: alert( 12..toFixed(1) ); // 12.0. Не идентичен </p>
+      </section>
+      <section>
+        <h4>Math random - случаное число от 0 до 1</h4>
+<pre>
+  Math.floor(Math.random() * (max - min + 1) + min)
+  var randomNumber = Math.round(min - 0.5 + Math.random() * (max - min + 1)); 
+  Math.ceil ??
+</pre>
+        <p>Math.max(a, b, c...) /// Math.min(a, b, c...) - Возвращает наибольший/меньший из списка аргументов</p>
+      </section>
+      <section>
+        <h4>Другое</h4>
+<pre>
+  Math.pow(n,y) - возведение n к степени y  
+  Math.abs() - возвращает модуль числа
+  Math.sqth()- квадратный корень - Для отрицательных чисел Math.sqrt() возвращает NaN (не число - корней нет)
+  Math.PI
+  Math.LOG10E
+  number.toLocaleString() - для красивого вывода чисел
+  
+  eval() - выполняет код со строки            
+</pre>
+      </section>
+    </section>
+
+    <section class="content-section" id="JS-time">
+      <h3>JS time</h3>
+      <section>
+        <h4>Таймеры</h4>
+        <p><b>setTimeout</b></p>
+<pre>
+  var timerId = setTimeout(func / code, delay[, arg1, arg2...]) // запускает функцию через определённое время
+  - func - без вызова!. ПОддерживаются строки, но лучше не использовать
+  - delay - задержка в миллисекундах, 1000 миллисекунд равны 1 секунде.
+  - [, arg1, arg2...] - аргументы, которые нужно передать функции              
+</pre>
+        <p>setInterval</p>
+        <pre>
+          var timerId = setInterval(func / code, delay[, arg1, arg2...]) // похожий синтаксис, но запускает выполнение функцию не один раз, а повторяет её через указанный интервал.
+        </pre>
+      </section>
+    </section>
 
     <a href="#to-top" class="button-scroll"></a>
 	</main>
