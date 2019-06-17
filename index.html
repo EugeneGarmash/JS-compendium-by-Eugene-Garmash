@@ -942,6 +942,14 @@ if (itsRaining == true || temperature &lt; 0 || temperature > 35) {
   const numbers = [2, 3, 4, 5];
   const dollars = numbers.map( number => '$' + number);
   // Вот как будет выглядеть массив dollars: ['$2', '$3', '$4', '$5']
+  // еще: 
+    const schools = [
+    "Yorktown",
+    "Washington & Lee",
+    "Wakefield"
+  ]
+  const highSchools = schools.map(school => ({ name: school }))
+  console.log(highSchools) // вернёт массив из трёх объектов
 
   /* 5-- <b>arr.filter</b> - фильтрация массива - cоздаёт новый массив, в который войдут только те элементы arr, для которых вызов callback(item, i, arr) / которые соответствуют заданному условию.
   возвратит true. */
@@ -955,7 +963,26 @@ if (itsRaining == true || temperature &lt; 0 || temperature > 35) {
   const studentsAge = [17, 16, 18, 19, 21, 17];
   const ableToDrink = studentsAge.filter( age => age > 18 );
   // Массив ableToDrink будет содержать два значения: [19, 21]
-
+  // Еще пример:
+  const schools = [
+    "Yorktown",
+    "Washington & Lee",
+    "Wakefield"
+  ]
+  const wSchools = schools.filter(school => school[0] === "W")
+  console.log( wSchools ) // ["Washington & Lee", "Wakefield"]
+  //!! При решении задач по удалению элемента из массива нужно пользоваться функцией Array.filter, а не Array.pop или Array.splice, потому что она не вносит в данные никаких изменений.
+  const array = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+  const newArray = array.splice(-1);
+  console.log(array); // [0, 1, 2, 3, 4, 5, 6, 7]
+  console.log(newArray); // [8]
+  console.log('**')
+  const array = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+  const newArray = [...array].splice(-1);
+  console.log(array); // [0, 1, 2, 3, 4, 5, 6, 7, 8]
+  console.log(newArray); // [8]
+  console.log('__');
+  
   /* 6-- <b>every/some</b> - возвращает true, если вызов callback вернёт true для каждого/какого-нибудь элемента arr.*/
   var arr = [1, -1, 2, -2, 3];
   function isPositive(number) {
@@ -1130,11 +1157,16 @@ if (itsRaining == true || temperature &lt; 0 || temperature > 35) {
   someArray.splice(2,2, 'My', 'name', 'is', 'Eugene');
   console.log(someArray); // вернет [1,'a', 'My', 'name', 'is', 'Eugene', [0,2,4,6]];
 
-  // <b>array.join(разделитель)</b> - массив в строку
+  // <b>array.join(разделитель)</b> - массив в строку. Не затрагивает начальный массив
+  const someArray = [1, 'a', 'someNoun', 68940, '0,2,4,6'];
   someArray.join('') // вернет "1asomeNoun68940,2,4,6" 
   someArray.join() // вернет "1asomeNoun68940,2,4,6"
   someArray.join(' ') вернет "1 a someNoun 6894 0,2,4,6"
   someArray('-') // вернет "1-a-someNoun-6894-0,2,4,6"
+  const array = [0, 1, 2, 3];
+  const arrayChanged = array.join(', ');
+  console.log(array); // [0, 1, 2, 3]
+  console.log(arrayChanged); // '0, 1, 2, 3'
 
   // <b>array.slice(begin, end)</b> - копирование (без end - до конца), возвращает скопированное
   var items = [1,2,3,4,5,6,7,8,9],
